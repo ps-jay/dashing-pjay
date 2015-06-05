@@ -55,7 +55,7 @@ SCHEDULER.every '15s', :first_in => 0 do |job|
     else
       title = "Buying"
     end
-    send_event('griddemand', { current: curr_meter_read, title: title })
+    send_event('griddemand', { value: curr_meter_read, title: title })
     time_change = true
   end
 

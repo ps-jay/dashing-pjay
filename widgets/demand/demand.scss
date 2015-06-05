@@ -1,0 +1,45 @@
+// ----------------------------------------------------------------------------
+// Mixins
+// ----------------------------------------------------------------------------
+@mixin transition($transition-property, $transition-time, $method) {
+  -webkit-transition: $transition-property $transition-time $method;
+  -moz-transition: $transition-property $transition-time $method;
+  -o-transition: $transition-property $transition-time $method;
+  transition: $transition-property $transition-time $method;
+}
+
+// ----------------------------------------------------------------------------
+// Sass declarations
+// ----------------------------------------------------------------------------
+$background-color: #000000;
+$value-color: #FFFFFF;
+$title-color: rgba(255, 255, 255, 0.7);
+$updated-at-color: rgba(0, 0, 0, 0.3);
+
+// ----------------------------------------------------------------------------
+// Widget-hotness styles
+// ----------------------------------------------------------------------------
+.widget-demand {
+
+  background-color: $background-color;
+  @include transition(background-color, 1s, linear);
+
+  .title {
+    color: $title-color;
+  }
+
+  .value {
+    color: $value-color;
+  }
+
+  .updated-at {
+    color: $updated-at-color;
+  }
+
+}
+
+.demand0 { background-color: #3C1240; }
+.demand1 { background-color: #8A0708; }
+.demand2 { background-color: #DE300F; }
+.demand3 { background-color: #F7771C; }
+.demand4 { background-color: #F7CC32; }

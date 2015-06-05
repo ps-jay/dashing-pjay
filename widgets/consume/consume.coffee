@@ -1,4 +1,4 @@
-class Dashing.Hotness extends Dashing.Widget
+class Dashing.Consume extends Dashing.Widget
 
   @accessor 'value', Dashing.AnimatedValue
 
@@ -20,7 +20,7 @@ class Dashing.Hotness extends Dashing.Widget
       when value < warm then 3
       when value >= warm then 4
   
-    backgroundClass = "hotness#{level}"
+    backgroundClass = "consume#{level}"
     lastClass = @get "lastClass"
     node.toggleClass "#{lastClass} #{backgroundClass}"
     @set "lastClass", backgroundClass

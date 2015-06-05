@@ -17,9 +17,9 @@ $title-color: rgba(255, 255, 255, 0.7);
 $updated-at-color: rgba(0, 0, 0, 0.3);
 
 // ----------------------------------------------------------------------------
-// Widget-hotness styles
+// Widget-consume styles
 // ----------------------------------------------------------------------------
-.widget-hotness {
+.widget-consume {
 
   background-color: $background-color;
   @include transition(background-color, 1s, linear);
@@ -38,14 +38,8 @@ $updated-at-color: rgba(0, 0, 0, 0.3);
 
 }
 
-.hotness0 { background-color: #75995A; }
-.hotness1 { background-color: #AAC92D; }
-.hotness2 { background-color: #E0D819; }
-.hotness3 { background-color: #EEBB11; }
-.hotness4 { background-color: #FD9B08; }
-
-.hotness0 { background-color: #00C176; }
-.hotness1 { background-color: #88C100; }
-.hotness2 { background-color: #FABE28; }
-.hotness3 { background-color: #FF8A00; }
-.hotness4 { background-color: #FF003C; }
+.consume0 { background-color: #00C176; }
+.consume1 { background-color: #88C100; }
+.consume2 { background-color: #FABE28; }
+.consume3 { background-color: #FF8A00; }
+.consume4 { background-color: #FF003C; }

@@ -10,7 +10,7 @@ class Dashing.Solar extends Dashing.Widget
     value = parseFloat data.value
     cool = parseFloat node.data "cool"
     warm = parseFloat node.data "warm"
-    interval = ((warm - cool) / 3)
+    interval = ((warm - cool) / 3.0)
     int1 = (cool + (interval * 1))
     int2 = (cool + (interval * 2))
     level = switch

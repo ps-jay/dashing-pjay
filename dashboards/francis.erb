@@ -1,12 +1,20 @@
 <script type='text/javascript'>
  $(function() {
-   Dashing.gridsterLayout('[{"col":1,"row":2,"size_x":1,"size_y":1},{"col":2,"row":2,"size_x":1,"size_y":1},{"col":3,"row":2,"size_x":1,"size_y":1},{"col":1,"row":1,"size_x":2,"size_y":1},{"col":3,"row":1,"size_x":1,"size_y":1}]')
+    Dashing.numColumns = 3
  });
  </script>
 
 <% content_for :title do %>Francis st. Energy<% end %>
 <div class="gridster">
   <ul>
+
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-id="clock" data-view="Clock"></div>
+    </li>
+
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="forecast" data-view="Forecast" data-title="Outside"></div>
+    </li>
 
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
       <div data-id="generating" data-view="Solar" data-title="Generating" data-suffix="kW" data-cool="0.3" data-warm="2.8"></div>
@@ -16,20 +24,9 @@
       <div data-id="consuming" data-view="Consume" data-title="Consuming" data-suffix="kW" data-cool="0.8" data-warm="5.0"></div>
     </li>
 
+    <!-- Replace with inside temp in the near future -->
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
       <div data-id="griddemand" data-view="Demand" data-title="Metering" data-suffix="kW" data-cool="0" data-warm="0"></div>
-    </li>
-<!--
-    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="payback" data-view="Number" data-title="Solar payback" data-prefix="$"></div>
-    </li>
--->
-    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
-      <div data-id="clock" data-view="Clock"></div>
-    </li>
-
-    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="forecast" data-view="Forecast" data-title="Outside"></div>
     </li>
 
   </ul>

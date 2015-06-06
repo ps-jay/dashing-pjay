@@ -8,12 +8,6 @@ curr_solar_read = 0
 
 curr_use = 0
 
-meter_db = SQLite3::Database.open "/energy-data/raven.sqlite"
-meter_db.results_as_hash = true
-
-solar_db = SQLite3::Database.open "/energy-data/solar.sqlite"
-solar_db.results_as_hash = true
-
 SCHEDULER.every '15s', :first_in => 0 do |job|
 
   last_meter_time = curr_meter_time
@@ -26,19 +20,33 @@ SCHEDULER.every '15s', :first_in => 0 do |job|
   time_change = false
 
   # Get metered demand
-  stm = meter_db.prepare "SELECT * FROM demand ORDER BY timestamp DESC LIMIT 1" 
-  rs = stm.execute 
-  rs.each do |row|
-    curr_meter_time = row['timestamp']
-    curr_meter_read = row['watts'] / 1000.0
+  begin
+    db = SQLite3::Database.open "/energy-data/raven.sqlite"
+    db.results_as_hash = true
+    stm = db.prepare "SELECT * FROM demand ORDER BY timestamp DESC LIMIT 1"
+    rs = stm.execute
+    rs.each do |row|
+      curr_meter_time = row['timestamp']
+      curr_meter_read = row['watts'] / 1000.0
+    end
+  ensure
+    stm.close if stm
+    db.close if db
   end
 
   # Get solar generation
-  stm = solar_db.prepare "SELECT * FROM system ORDER BY timestamp DESC LIMIT 1"
-  rs = stm.execute
-  rs.each do |row|
-    curr_solar_time = row['timestamp']
-    curr_solar_read = row['pout_W'] / 1000.0
+  begin
+    db = SQLite3::Database.open "/energy-data/solar.sqlite"
+    db.results_as_hash = true
+    stm = db.prepare "SELECT * FROM system ORDER BY timestamp DESC LIMIT 1"
+    rs = stm.execute
+    rs.each do |row|
+      curr_solar_time = row['timestamp']
+      curr_solar_read = row['pout_W'] / 1000.0
+    end
+  ensure
+    stm.close if stm
+    db.close if db
   end
 
   # Calculate consumption

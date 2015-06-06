@@ -51,6 +51,9 @@ SCHEDULER.every '15s', :first_in => 0 do |job|
 
   # Calculate consumption
   curr_use = curr_meter_read + curr_solar_read
+  if curr_use < 0.3
+    curr_use = 0.3  # Floor value
+  end
 
   # Rounding
   curr_meter_read = ("%0.01f" % curr_meter_read).to_f()
@@ -60,10 +63,12 @@ SCHEDULER.every '15s', :first_in => 0 do |job|
   if curr_meter_time != last_meter_time
     if curr_meter_read < 0
       title = "Selling"
+      value = curr_meter_read * -1
     else
       title = "Buying"
+      value = curr_meter_read
     end
-    send_event('griddemand', { value: curr_meter_read, title: title })
+    send_event('griddemand', { value: value, title: title })
     time_change = true
   end
 

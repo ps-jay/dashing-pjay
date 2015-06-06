@@ -22,5 +22,5 @@ SCHEDULER.every '10m', :first_in => 0 do |job|
   forecast = JSON.parse(response.body)  
   forecast_current_temp = forecast["currently"]["temperature"].round
   forecast_hour_summary = forecast["hourly"]["summary"]
-  send_event('forecast', { temperature: "#{forecast_current_temp}&deg;", hour: "#{forecast_hour_summary}"})
+  send_event('outside', { temperature: "#{forecast_current_temp}&deg;", hour: "#{forecast_hour_summary}"})
 end

@@ -1,7 +1,8 @@
 require 'dashing'
 
 configure do
-  set :auth_token, 'YOUR_AUTH_TOKEN'
+  # Disabled POST at nginx layer...
+  set :auth_token, 'abcdefghijklmnopqrstuvwxyz'
 
   helpers do
     def protected!

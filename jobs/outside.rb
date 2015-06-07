@@ -2,7 +2,8 @@ require 'net/https'
 require 'json'
 
 # Forecast API Key from https://developer.forecast.io
-forecast_api_key = "3c76d37bc79af5213db4908f326d2906"
+# (set as an env. var)
+forecast_api_key = ENV['FORECASTIO']
 
 # Latitude, Longitude for location
 forecast_location_lat = "-37.8260"

@@ -24,6 +24,7 @@ docker run -d -p 3030:3030 -m 256m \
     -v=/opt/dashing/widgets:/widgets:ro \
     -v=/opt/energy:/energy-data:ro \
     -e FORECASTIO=(an_api_key_here) \
+    --restart=always \
     --name=dashing local/dashing
 ```
 
@@ -33,6 +34,7 @@ docker run -d -p 3030:3030 -m 256m \
 docker run -d -p 1280:80 -m 192m \
     -v=/opt/dashing/nginx:/etc/nginx/conf.d:ro \
     --link dashing:dashing \
+    --restart=always \
     --name=nginx nginx
 ```
 

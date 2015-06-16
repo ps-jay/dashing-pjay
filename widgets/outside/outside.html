@@ -1,9 +1,11 @@
-<img src="/tree.png" height="50px"/><p>&nbsp;</p>
+<img src="/tree.png" alt="A tree" height="50"/>
+<p>&nbsp;</p>
 
-<h1 class="title" data-bind="title"></h1>
+<h1 class="title" data-bind="title" style="margin-bottom: 0px;"/>
 
-<h2 class="temp" data-bind="temperature | raw"></h2><h4>&nbsp;</h4>
+<h2 style="display: inline;">&nbsp;</h2>
+<h2 class="temp" data-bind="temperature | raw" style="font-size: 108px; display: inline;"/>
 <!--<p class="summary" data-bind="hour | raw"></p>-->
 
 <!--<p class="more-info">Powered by Forecast.io</p>-->
-<p class="updated-at" data-bind="updatedAtMessage"></p>
+<p class="updated-at" data-bind="updatedAtMessage"/>

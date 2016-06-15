@@ -1,6 +1,8 @@
-<span class="min" data-bind="temperature | raw"/><span class="min">&nbsp;..&nbsp;</span><span class="max" data-bind="temperature | raw"/>
+<p class="title" data-bind="name"/>
+<h2 style="margin-top: 15px;">
+  <span class="min" data-bind="min | raw"/><span class="min">&deg;&nbsp;..&nbsp;</span><span class="max" data-bind="max | raw"/><span class="max">&deg;</span>
+</h2>
 
-<p class="rain">Morning frost. Mostly sunny.</p>
-<p class="rain">40% chance of 40 to 100 mm rain</p>
-<p class="title" data-bind="title"/>
+<p class="rain" data-bind="precis"/>
+<p class="rain"><span data-bind="rain_chance"/> chance of <span data-bind="rain_range"/> rain.</p>
 <p class="updated-at" data-bind="updatedAtMessage"/>

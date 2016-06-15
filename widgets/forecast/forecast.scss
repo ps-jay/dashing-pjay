@@ -16,6 +16,10 @@ $half-color: rgba(255, 255, 255, 0.5);
 
   .title {
     color: $half-color;
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 20px;
   }
 
   .min {

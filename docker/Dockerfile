@@ -3,4 +3,7 @@ RUN \
     apt-get update && \
     apt-get install -y ruby-sqlite3
 
+RUN gem install nokogiri
 
+RUN echo "" >> /dashing/Gemfile \
+ && echo "gem 'nokogiri'" >> /dashing/Gemfile

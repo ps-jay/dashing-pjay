@@ -7,9 +7,9 @@ Utilizes Docker and [Dashing](http://shopify.github.com/dashing).
 ## Dashing container
 
 ```
-docker build --tag="local/dashing" docker
+docker build --tag="local/dashing" .
 docker run -d --network=host -m 384m \
-    -v=/opt/energy:/energy-data:ro \
+    -v=/srv/energy:/energy-data:ro \
     -e FORECASTIO=(an_api_key_here) \
     --restart=always \
     --name=dashing local/dashing

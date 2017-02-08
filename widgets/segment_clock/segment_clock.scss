@@ -1,0 +1,33 @@
+// ----------------------------------------------------------------------------
+// Sass declarations
+// ----------------------------------------------------------------------------
+$background-color:  #000000;
+
+@font-face {
+  font-family: 'segment';
+  src: url('../segment.ttf');
+}
+
+// ----------------------------------------------------------------------------
+// Widget-clock styles
+// ----------------------------------------------------------------------------
+.widget-segment-clock {
+  
+  background-color: $background-color;
+
+  .time {
+    font-family: 'segment';
+    color: #992222;
+    background-color: #000000;
+    font-size: 330px;
+    text-align: center;
+    bottom: 0px;
+    top: 0px;
+    left: 50px;
+    right: 50px;
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+  }
+
+}

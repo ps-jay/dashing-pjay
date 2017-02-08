@@ -4,24 +4,11 @@ Utilizes Docker and [Dashing](http://shopify.github.com/dashing).
 
 # Setup
 
-## Checkout
-
-```
-cd /opt
-git clone https://github.com/ps-jay/dashing-pjay.git dashing
-```
-
 ## Dashing container
 
 ```
-cd /opt/dashing
 docker build --tag="local/dashing" docker
-docker run -d -p 3030:3030 -m 256m \
-    -v=/opt/dashing/dashboards:/dashboards:ro \
-    -v=/opt/dashing/jobs:/jobs:ro \
-    -v=/opt/dashing/config:/config:ro \
-    -v=/opt/dashing/public:/public:ro \
-    -v=/opt/dashing/widgets:/widgets:ro \
+docker run -d --network=host -m 384m \
     -v=/opt/energy:/energy-data:ro \
     -e FORECASTIO=(an_api_key_here) \
     --restart=always \
@@ -30,6 +17,8 @@ docker run -d -p 3030:3030 -m 256m \
 
 ## Nginx container
 
+*This could be improved...*
+
 ```
 docker run -d -p 1280:80 -m 192m \
     -v=/opt/dashing/nginx:/etc/nginx/conf.d:ro \
@@ -37,7 +26,3 @@ docker run -d -p 1280:80 -m 192m \
     --restart=always \
     --name=nginx nginx
 ```
-
-# Todo
-
-* Use docker compose to coordinate the two containers

@@ -20,9 +20,8 @@ docker run -d --network=host -m 384m \
 *This could be improved...*
 
 ```
-docker run -d -p 1280:80 -m 192m \
-    -v=/opt/dashing/nginx:/etc/nginx/conf.d:ro \
-    --link dashing:dashing \
+docker run -d -p 1280:1280 -m 192m \
+    -v=`pwd`/nginx:/etc/nginx/conf.d:ro \
     --restart=always \
     --name=nginx nginx
 ```

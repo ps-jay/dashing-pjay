@@ -60,6 +60,23 @@ SCHEDULER.every '60m', :first_in => 0 do |job|
   day_2['rain_range'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_2['index']}']/element[@type='precipitation_range']").first.children.first.text
   day_2['precis'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_2['index']}']/text[@type='precis']").first.children.first.text
 
+  # Adjust rain forecast to avoid "0% change of 0mm of rain" and the like...
+  if day_1['rain_chance'] == '0%' then
+    day_1['rain_forecast'] = 'No rain.'
+  elsif day_1['rain_range'] == '0mm' then
+    day_1['rain_forecast'] = 'No rain.'
+  else
+    day_1['rain_forecast'] = "#{day_1['rain_chance']} chance of #{day_1['rain_range']} rain."
+  end
+
+  if day_2['rain_chance'] == '0%' then
+    day_2['rain_forecast'] = 'No rain.'
+  elsif day_2['rain_range'] == '0mm' then
+    day_2['rain_forecast'] = 'No rain.'
+  else
+    day_2['rain_forecast'] = "#{day_2['rain_chance']} chance of #{day_2['rain_range']} rain."
+  end
+
   send_event('forecast_1', day_1)
   send_event('forecast_2', day_2)
 

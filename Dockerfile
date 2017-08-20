@@ -14,8 +14,11 @@ RUN yum update -y \
         epel-release \
         ruby \
         rubygem-bundler \
- && yum install -y \
+ && yum clean all
+
+RUN yum install -y \
         nodejs \
+        https://kojipkgs.fedoraproject.org//packages/http-parser/2.7.1/3.el7/x86_64/http-parser-2.7.1-3.el7.x86_64.rpm \
  && yum clean all
 
 ADD Gemfile /tmp/
@@ -33,7 +36,7 @@ RUN yum install -y \
         -g /tmp/Gemfile \
         --no-document \
  && rm /tmp/Gemfile \
- && yum history undo 6 -y \
+ && yum history undo 5 -y \
  && yum clean all
 
 #--- Add dashing user

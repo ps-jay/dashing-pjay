@@ -51,25 +51,25 @@ SCHEDULER.every '60m', :first_in => 0 do |job|
   day_1['min'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_1['index']}']/element[@type='air_temperature_minimum']").first.children.first.text
   day_1['max'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_1['index']}']/element[@type='air_temperature_maximum']").first.children.first.text
   day_1['rain_chance'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_1['index']}']/text[@type='probability_of_precipitation']").first.children.first.text
-  day_1['rain_range'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_1['index']}']/element[@type='precipitation_range']").first.children.first.text
   day_1['precis'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_1['index']}']/text[@type='precis']").first.children.first.text
 
   day_2['min'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_2['index']}']/element[@type='air_temperature_minimum']").first.children.first.text
   day_2['max'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_2['index']}']/element[@type='air_temperature_maximum']").first.children.first.text
   day_2['rain_chance'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_2['index']}']/text[@type='probability_of_precipitation']").first.children.first.text
-  day_2['rain_range'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_2['index']}']/element[@type='precipitation_range']").first.children.first.text
   day_2['precis'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_2['index']}']/text[@type='precis']").first.children.first.text
 
   # Adjust rain forecast to avoid "0% change of 0mm of rain" and the like...
   if day_1['rain_chance'] == '0%' or day_1['rain_range'] == '0 mm' then
     day_1['rain_forecast'] = 'No rain.'
   else
+    day_1['rain_range'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_1['index']}']/element[@type='precipitation_range']").first.children.first.text
     day_1['rain_forecast'] = "#{day_1['rain_chance']} chance of #{day_1['rain_range']} rain."
   end
 
   if day_2['rain_chance'] == '0%' or day_2['rain_range'] == '0 mm' then
     day_2['rain_forecast'] = 'No rain.'
   else
+    day_2['rain_range'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_2['index']}']/element[@type='precipitation_range']").first.children.first.text
     day_2['rain_forecast'] = "#{day_2['rain_chance']} chance of #{day_2['rain_range']} rain."
   end
 

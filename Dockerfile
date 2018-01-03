@@ -14,12 +14,12 @@ RUN yum update -y \
         epel-release \
         ruby \
         rubygem-bundler \
- && yum clean all
+        https://rpm.nodesource.com/pub_8.x/el/7/x86_64/nodesource-release-el7-1.noarch.rpm \
+ && yum clean all && rm -rf /var/cache/yum
 
 RUN yum install -y \
         nodejs \
-        https://kojipkgs.fedoraproject.org//packages/http-parser/2.7.1/3.el7/x86_64/http-parser-2.7.1-3.el7.x86_64.rpm \
- && yum clean all
+ && yum clean all && rm -rf /var/cache/yum
 
 ADD Gemfile /tmp/
 
@@ -36,8 +36,12 @@ RUN yum install -y \
         -g /tmp/Gemfile \
         --no-document \
  && rm /tmp/Gemfile \
- && yum history undo 5 -y \
- && yum clean all
+ && yum history undo 6 -y \
+ && yum clean all && rm -rf /var/cache/yum
+
+#--- Test `yum undo X` has done the right thing
+RUN bash -c "if [[ -n '`type gcc`' ]] ; then echo 'Error: gcc still installed' && exit 1 ; fi"
+RUN node --version
 
 #--- Add dashing user
 RUN useradd -r -s /sbin/nologin \

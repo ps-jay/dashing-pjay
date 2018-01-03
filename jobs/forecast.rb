@@ -62,14 +62,22 @@ SCHEDULER.every '60m', :first_in => 0 do |job|
   if day_1['rain_chance'] == '0%' or day_1['rain_range'] == '0 mm' then
     day_1['rain_forecast'] = 'No rain.'
   else
-    day_1['rain_range'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_1['index']}']/element[@type='precipitation_range']").first.children.first.text
+    begin
+      day_1['rain_range'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_1['index']}']/element[@type='precipitation_range']").first.children.first.text
+    rescue
+      day_1['rain_range'] = 'any'
+    end
     day_1['rain_forecast'] = "#{day_1['rain_chance']} chance of #{day_1['rain_range']} rain."
   end
 
   if day_2['rain_chance'] == '0%' or day_2['rain_range'] == '0 mm' then
     day_2['rain_forecast'] = 'No rain.'
   else
-    day_2['rain_range'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_2['index']}']/element[@type='precipitation_range']").first.children.first.text
+    begin
+      day_2['rain_range'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_2['index']}']/element[@type='precipitation_range']").first.children.first.text
+    rescue
+      day_2['rain_range'] = 'any'
+    end
     day_2['rain_forecast'] = "#{day_2['rain_chance']} chance of #{day_2['rain_range']} rain."
   end
 

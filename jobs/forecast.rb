@@ -65,7 +65,7 @@ SCHEDULER.every '60m', :first_in => 0 do |job|
     begin
       day_1['rain_range'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_1['index']}']/element[@type='precipitation_range']").first.children.first.text
     rescue
-      day_1['rain_range'] = 'any'
+      day_1['rain_range'] = 'some'
     end
     day_1['rain_forecast'] = "#{day_1['rain_chance']} chance of #{day_1['rain_range']} rain."
   end
@@ -76,7 +76,7 @@ SCHEDULER.every '60m', :first_in => 0 do |job|
     begin
       day_2['rain_range'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_2['index']}']/element[@type='precipitation_range']").first.children.first.text
     rescue
-      day_2['rain_range'] = 'any'
+      day_2['rain_range'] = 'some'
     end
     day_2['rain_forecast'] = "#{day_2['rain_chance']} chance of #{day_2['rain_range']} rain."
   end

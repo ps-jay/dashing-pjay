@@ -19,6 +19,7 @@ RUN yum update -y \
 
 RUN yum install -y \
         nodejs \
+        python-pip \
  && yum clean all && rm -rf /var/cache/yum
 
 ADD Gemfile /tmp/
@@ -30,7 +31,6 @@ RUN yum install -y \
         libstdc++-devel \
         openssl-devel \
         ruby-devel \
-        sqlite-devel \
  && echo "Starting gem install, don't worry it probably hasn't hung..." \
  && gem install \
         -g /tmp/Gemfile \
@@ -42,6 +42,9 @@ RUN yum install -y \
 #--- Test `yum undo X` has done the right thing
 RUN bash -c "if [[ -n '`type gcc`' ]] ; then echo 'Error: gcc still installed' && exit 1 ; fi"
 RUN node --version
+
+#--- Add Python utility
+RUN pip install https://github.com/ps-jay/RainEagle/archive/v0.1.8-pjfork.zip
 
 #--- Add dashing user
 RUN useradd -r -s /sbin/nologin \
@@ -64,7 +67,7 @@ RUN bundle install --local
 
 ADD config.ru /dashing/
 ADD public/* /dashing/public/
-ADD jobs/*.rb /dashing/jobs/
+ADD jobs/* /dashing/jobs/
 ADD dashboards/*.erb /dashing/dashboards/
 ADD widgets/ /dashing/widgets/
 

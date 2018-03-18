@@ -8,7 +8,7 @@ solar_update = false
 
 curr_use = 0
 
-SCHEDULER.every '30s', :first_in => 0 do |job|
+SCHEDULER.every '55s', :first_in => 0 do |job|
 
   # Get metered demand
   begin
@@ -35,24 +35,24 @@ SCHEDULER.every '30s', :first_in => 0 do |job|
     panels_to_eof = resp.body[panels_start..-1]
     panels_count = /<td>\d+<\/td>/ =~ panels_to_eof
     panels_end = /<\/td>/ =~ panels_to_eof[(panels_count+4)..-1]
-    panels = panels_to_eof[(panels_count+4),panels_end]
+    panels = panels_to_eof[(panels_count+4),panels_end].to_i()
 
     online_start = /<td>Number of Microinverters Online<\/td>/ =~ resp.body
     online_to_eof = resp.body[online_start..-1]
     online_count = /<td>\d+<\/td>/ =~ online_to_eof
     online_end = /<\/td>/ =~ online_to_eof[(online_count+4)..-1]
-    online = online_to_eof[(online_count+4),online_end]
+    online = online_to_eof[(online_count+4),online_end].to_i()
 
     if new_solar_read != '' then
-      solar = new_solar_read
+      solar = new_solar_read.to_f() * 1000
       solar_update = true
     end
   end
 
   # Calculate consumption
   curr_use = meter + solar
-  if curr_use < 200
-    curr_use = 200  # Floor value
+  if curr_use < 100
+    curr_use = 100  # Floor value
   end
 
   # Rounding

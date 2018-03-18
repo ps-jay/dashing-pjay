@@ -1,7 +1,12 @@
 <img src="/solar.png" alt="A solar panel" height="50" style="-webkit-filter:invert(100%);filter:invert(100%);"/>
 <p>&nbsp;</p>
 
-<h1 class="title" data-bind="title" style="margin-bottom: 0px;"/>
+<h1 class="title">
+  <span data-bind="online" style="margin-bottom: 0px;"/>
+  <span> / </span>
+  <span data-bind="panels" style="margin-bottom: 0px;"/>
+  <span data-bind="title" style="margin-bottom: 0px;"/>
+</h1>
 
 <h2 style="display: inline;">&nbsp;</h2>
 <h2 class="value" data-bind="value | shortenedNumber | prepend prefix" style="font-size: 108px; display: inline;"/>

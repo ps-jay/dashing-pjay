@@ -9,8 +9,9 @@ Utilizes Docker and [Dashing](http://shopify.github.com/dashing).
 ```
 docker build --tag="local/dashing" .
 docker run -d --network=host -m 384m \
-    -v=/srv/energy:/energy-data:ro \
     -e FORECASTIO=(an_api_key_here) \
+    -e RE_USERNAME=(user) \
+    -e RE_PASSWORD=(pass) \
     --restart=always \
     --name=dashing local/dashing
 ```

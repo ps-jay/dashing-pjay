@@ -14,7 +14,7 @@ except:
     pass
 
 try:
-    raineagle = RainEagle.Eagle(debug=0, addr='10.10.8.70', username=USERNAME, password=PASSWORD)
+    raineagle = RainEagle.Eagle(debug=0, addr='10.10.8.41', username=USERNAME, password=PASSWORD)
 
     print(int(raineagle.get_instantaneous_demand()['InstantaneousDemand']['Demand'], 0))
 except:

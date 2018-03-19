@@ -29,7 +29,7 @@ SCHEDULER.every '55s', :first_in => 0 do |job|
     generate_to_eof = resp.body[generate_start..-1]
     generate_cell = /<td>\s*(\d|\.)+\sk?W\s*<\/td>/ =~ generate_to_eof
     generate_end = /\d\s/ =~ generate_to_eof[(generate_cell+4)..-1]
-    new_solar_read = generate_to_eof[(generate_kw+4),(generate_end+1)].strip
+    new_solar_read = generate_to_eof[(generate_cell+4),(generate_end+1)].strip
     # kW -> W
     if /kW/ =~ generate_to_eof[(generate_cell+4),(generate_end+4)] then
       new_solar_read = new_solar_read * 1000

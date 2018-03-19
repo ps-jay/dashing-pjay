@@ -72,4 +72,8 @@ ADD dashboards/*.erb /dashing/dashboards/
 ADD widgets/ /dashing/widgets/
 
 EXPOSE 3030
-CMD ["dashing", "start"]
+
+# Redirecting stderr makes troubleshooting hard, but should mean that
+# harddrives spin down, instead of always spinning for fairly useless
+# http access logging.
+CMD /usr/local/bin/dashing start 2> /dev/null

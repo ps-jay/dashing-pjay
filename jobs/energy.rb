@@ -13,10 +13,10 @@ SCHEDULER.every '55s', :first_in => 0 do |job|
   # Get metered demand
   begin
     new_meter_read = `python jobs/rain_eagle.py`
-    if new_meter_read != '' then
-      meter = new_meter_read.to_i
-      meter_update = true
-    end
+    meter_update = true
+    meter = new_meter_read.to_i()
+  rescue
+    meter_update = false
   end
 
   # Get solar generation
@@ -32,7 +32,7 @@ SCHEDULER.every '55s', :first_in => 0 do |job|
     new_solar_read = generate_to_eof[(generate_cell+4),(generate_end+1)].strip
     # kW -> W
     if /kW/ =~ generate_to_eof[(generate_cell+4),(generate_end+4)] then
-      new_solar_read = new_solar_read * 1000
+      new_solar_read = new_solar_read.to_f() * 1000
     end
 
     panels_start = /<td>Number of Microinverters<\/td>/ =~ resp.body
@@ -47,10 +47,10 @@ SCHEDULER.every '55s', :first_in => 0 do |job|
     online_end = /<\/td>/ =~ online_to_eof[(online_count+4)..-1]
     online = online_to_eof[(online_count+4),online_end].to_i()
 
-    if new_solar_read != '' then
-      solar = new_solar_read.to_f() * 1000
-      solar_update = true
-    end
+    solar_update = true
+    solar = new_solar_read.to_f()
+  rescue
+    solar_update = false
   end
 
   # Calculate consumption
@@ -65,7 +65,6 @@ SCHEDULER.every '55s', :first_in => 0 do |job|
 
   if solar_update then
     send_event('generating', { value: solar_kw, panels: panels, online: online })
-    solar_update = false
   end
 
   if meter_update or solar_update then

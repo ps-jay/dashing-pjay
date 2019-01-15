@@ -67,6 +67,7 @@ ADD public/* /dashing/public/
 ADD jobs/*.rb /dashing/jobs/
 ADD dashboards/*.erb /dashing/dashboards/
 ADD widgets/ /dashing/widgets/
+RUN curl https://raw.githubusercontent.com/rstacruz/jquery.transit/master/jquery.transit.js -o /dashing/assets/javascripts/jquery.transit.js
 
 EXPOSE 3030
 CMD ["dashing", "start"]

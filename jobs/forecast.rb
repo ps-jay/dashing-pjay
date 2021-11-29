@@ -1,15 +1,17 @@
-require 'net/http'
+require 'net/ftp'
 require 'time'
 require 'uri'
 require 'nokogiri'
 
 bom_area = 'VIC_PT042'
-uri = URI.parse('http://www.bom.gov.au/fwo/IDV10753.xml')
 
 SCHEDULER.every '60m', :first_in => 0 do |job|
-  http = Net::HTTP.new(uri.host, uri.port)
-  resp = http.request(Net::HTTP::Get.new(uri.request_uri))
-  forecast = Nokogiri::XML(resp.body)
+  Net::FTP.open('ftp.bom.gov.au') do |ftp|
+    ftp.login
+    ftp.chdir('anon/gen/fwo')
+    ftp.gettextfile('IDV10753.xml', '/tmp/forecast.xml')
+  end
+  forecast = File.open('/tmp/forecast.xml') { |f| Nokogiri::XML(f) }
 
   end_time_index_0 = Time.iso8601(forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='0']").first.attributes['end-time-local'].value)
 
@@ -48,7 +50,9 @@ SCHEDULER.every '60m', :first_in => 0 do |job|
     }
   end
 
-  day_1['min'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_1['index']}']/element[@type='air_temperature_minimum']").first.children.first.text
+  if day_1['index'] > 0 then
+    day_1['min'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_1['index']}']/element[@type='air_temperature_minimum']").first.children.first.text
+  end
   day_1['max'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_1['index']}']/element[@type='air_temperature_maximum']").first.children.first.text
   day_1['rain_chance'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_1['index']}']/text[@type='probability_of_precipitation']").first.children.first.text
   day_1['precis'] = forecast.xpath("//area[@aac='#{bom_area}']/forecast-period[@index='#{day_1['index']}']/text[@type='precis']").first.children.first.text

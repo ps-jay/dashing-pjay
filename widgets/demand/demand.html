@@ -1,7 +1,9 @@
-<img src="/dollar.png" height="50px" style="-webkit-filter:invert(100%);filter:invert(100%);"/><p>&nbsp;</p>
+<img src="/dollar.png" alt="A dollar sign" height="50" style="-webkit-filter:invert(100%);filter:invert(100%);"/>
+<p>&nbsp;</p>
 
-<h1 class="title" data-bind="title"></h1>
+<h1 class="title" data-bind="title" style="margin-bottom: 0px;"/>
 
-<h2 class="value" data-bind="value | shortenedNumber | prepend prefix"></h2><h4 class="suffix" data-bind="suffix"></h4>
+<h2 style="display: inline;">&nbsp;</h2>
+<h2 class="value" data-bind="value | shortenedNumber | prepend prefix | append suffix" style="font-size: 108px; display: inline;"/>
 
-<p class="updated-at" data-bind="updatedAtMessage"></p>
+<p class="updated-at" data-bind="updatedAtMessage"/>

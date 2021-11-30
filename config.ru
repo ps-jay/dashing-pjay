@@ -3,6 +3,7 @@ require 'dashing'
 configure do
   # Disabled POST at nginx layer...
   set :auth_token, 'abcdefghijklmnopqrstuvwxyz'
+  set :protection, :except => :frame_options
 
   helpers do
     def protected!

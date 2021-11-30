@@ -12,8 +12,11 @@ curr_solar_read = 0
 
 curr_use = 0
 
-demand = URI.parse('http://10.10.1.5:8123/api/states/sensor.current_demand')
-generation = URI.parse('http://10.10.1.5:8123/api/states/sensor.inverter_instant_power')
+homeassistant = URI.parse('http://10.10.1.5:8123')
+
+demand = URI.parse('/api/states/sensor.current_demand')
+generation = URI.parse('/api/states/sensor.inverter_instant_power')
+price = URI.parse('/api/states/sensor.salisbury_general_price')
 
 headers = {
   'Authorization' => 'Bearer ' + ha_api_key,
@@ -31,19 +34,23 @@ SCHEDULER.every '15s', :first_in => 0 do |job|
   last_use = curr_use
   time_change = false
 
+  http = Net::HTTP.new(homeassistant.host, homeassistant.port)
+
   # Get metered demand
-  http = Net::HTTP.new(demand.host, demand.port)
   resp = http.get(demand.path, headers)
   dem = JSON.parse(resp.body)
   curr_meter_time = dem['last_updated']
   curr_meter_read = dem['state'].to_f
 
   # Get solar generation
-  http = Net::HTTP.new(generation.host, generation.port)
   resp = http.get(generation.path, headers)
   gen = JSON.parse(resp.body)
   curr_solar_time = gen['last_updated']
   curr_solar_read = gen['state'].to_f / 1000.0
+
+  # Get price
+  resp = http.get(price.path, headers)
+  send_event('electricity_cost', { value: JSON.parse(resp.body)['state'].to_i })
 
   # Calculate consumption
   curr_use = curr_meter_read + curr_solar_read

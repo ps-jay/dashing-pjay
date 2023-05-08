@@ -7,12 +7,11 @@ Utilizes Docker and [Dashing](http://shopify.github.com/dashing).
 ## Dashing container
 
 ```
-docker build --tag="local/dashing" .
+docker build --tag="local/smashing" .
 docker run -d --network=host -m 384m \
-    -v=/srv/energy:/energy-data:ro \
-    -e FORECASTIO=(an_api_key_here) \
-    --restart=always \
-    --name=dashing local/dashing
+    -e HAKEY=(an_api_key_here) \
+    --restart=unless-stopped \
+    --name=smashing local/smashing
 ```
 
 ## Nginx container
@@ -22,6 +21,6 @@ docker run -d --network=host -m 384m \
 ```
 docker run -d -p 1280:1280 -m 192m \
     -v=`pwd`/nginx:/etc/nginx/conf.d:ro \
-    --restart=always \
+    --restart=unless-stopped \
     --name=nginx nginx
 ```

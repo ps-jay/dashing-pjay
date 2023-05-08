@@ -1,6 +1,6 @@
 # vi: set ft=dockerfile sw=4 :
 
-FROM ruby:3.0-alpine3.14
+FROM ruby:3.1-alpine3.17
 
 MAINTAINER Philip Jay <phil@jay.id.au>
 
